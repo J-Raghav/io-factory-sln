@@ -14,8 +14,8 @@ export default function WaterTankProblem({ colorPallet }) {
   const [animations, setAnimations] = useState([]);
   const [hideLabel, setHideLabel] = useState(false);
   const waterBlocks = useMemo(
-    () => getWater(blockHeights, { cover, main }),
-    [blockHeights, cover]
+    () => getWater(blockHeights, colorPallet),
+    [blockHeights, colorPallet]
   );
   const waterVolume = useMemo(
     () => waterBlocks.map((w) => w.overflow).reduce((pre, h) => pre + h, 0),

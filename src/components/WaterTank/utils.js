@@ -85,7 +85,6 @@ export function getWater(blockHeights, { cover, main }) {
       width: scaleX + "rem",
       position: "absolute",
       left: ix * scaleX + "rem",
-      border: `1px solid ${cover}`,
       color: "#fff",
     };
     const overflowHeight = overflowHeights[ix];
