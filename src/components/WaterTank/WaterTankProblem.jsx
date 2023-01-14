@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   containerHeightRem,
   containerWidthRem,
   getBlocks,
   getRandomBlockHeights,
-  getRandomColorPallet,
   getWater,
 } from "./utils";
 import './WaterTankProblem.css'
@@ -25,9 +24,7 @@ export default function WaterTankProblem({ colorPallet }) {
   const containerStyles = {
     maxHeight: containerHeightRem + "rem",
     width: containerWidthRem + "rem",
-    height: containerHeightRem + "rem",
-    position: "relative",
-    overflowY: "hidden",
+    height: containerHeightRem + "rem"
   };
 
   const pourWater = () => {
@@ -53,14 +50,12 @@ export default function WaterTankProblem({ colorPallet }) {
 
   return (
     <div
-      className="h-100 v-100 d-flex align-items-center"
-      style={{ backgroundColor: cover }}
-    >
+      className="h-100 v-100 d-flex align-items-center">
       <div className="mx-auto" style={{ width: containerWidthRem + "rem" }}>
         <div className="w-100" style={{ height: "5rem" }}>
-          <h1 className="h1" style={{ color: main }}>
+          <h2 className="h2">
             Water Tank Problem
-          </h1>
+          </h2>
           {animations.length !== 0 ? (
             <div className="ms-auto strong">
               <span style={{ color: main }}>Ans. {waterVolume} Units</span>
@@ -68,7 +63,7 @@ export default function WaterTankProblem({ colorPallet }) {
           ) : null}
         </div>
         <div
-          className={`d-flex align-items-end justify-content-center flex-wrap mx-auto`}
+          className={`water-tank d-flex align-items-end justify-content-center flex-wrap mx-auto`}
           style={containerStyles}
         >
           {waterBlocks.map((w) => w.element)}

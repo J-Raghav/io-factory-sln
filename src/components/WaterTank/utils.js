@@ -17,6 +17,8 @@ export const colorPallets = [
   { main: "#101820", cover: "#FEE715" },
 ];
 
+export const DefaultColorPallet = { main: "#ADEFD1", cover: "#00203F" };
+
 export function getRandomNumber(n) {
   return Math.floor(Math.random() * n);
 }
@@ -83,6 +85,7 @@ export function getWater(blockHeights, { cover, main }) {
       width: scaleX + "rem",
       position: "absolute",
       left: ix * scaleX + "rem",
+      border: `1px solid ${cover}`,
       color: "#fff",
     };
     const overflowHeight = overflowHeights[ix];
@@ -94,7 +97,7 @@ export function getWater(blockHeights, { cover, main }) {
     ];
     const animateOptions = {
       fill: "forwards",
-      duration: 1000,
+      duration: 1000 + ix * 75,
       iteration: 1,
     };
 
