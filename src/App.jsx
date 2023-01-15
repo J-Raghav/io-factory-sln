@@ -8,6 +8,7 @@ import {
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import WaterTankProblem from "./components/WaterTank/WaterTankProblem";
 import MaximumProfitProblem from "./components/MaximumProfit/MaximumProfitProblem";
+import CulinaryKitchen from "./components/CulinaryKitchen/CulinaryKitchen";
 
 function Home() {
   return (
@@ -19,6 +20,9 @@ function Home() {
         </li>
         <li>
           <Link to={"/maximum-profit-sln"}>Maximum Profit Solution</Link>
+        </li>
+        <li>
+          <Link to={"/culinary-kitchen"}>CSS Assignment</Link>
         </li>
       </ul>
     </div>
@@ -55,6 +59,7 @@ function App() {
           element={<WaterTankProblem colorPallet={{ main, cover }} />}
         />
         <Route path="/maximum-profit-sln" element={<MaximumProfitProblem />} />
+        <Route path="/culinary-kitchen" element={<CulinaryKitchen />} />
       </Routes>
     </div>
   );

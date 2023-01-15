@@ -1,0 +1,188 @@
+.culinary-kitchen {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: .75rem;
+    font-style: normal;
+    overflow-x: auto;
+}
+
+.culinary-kitchen > div {
+    min-width: 1200px;
+}
+.title-container {
+    padding: .625rem;
+    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.1);
+}
+
+.title-container span {
+    font-family: Satisfy;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.section-title{
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 1rem auto 0 auto;
+}
+
+.section-title-hr {
+    width: 3rem;
+    height: 3px;
+    margin: .25rem auto 1rem auto;
+    background-color: #342679;
+}
+
+.food-showcase {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-areas: 
+        "a a b c"
+        "a a d e";
+    gap: 1rem;
+}
+
+.food-variety{
+    display: inline-block;
+    position: relative;
+    border-radius: .75rem;
+    overflow: hidden;
+}
+
+.food-variety .mask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.food-variety img {
+    width: 100%;
+}
+
+.food-variety .food-content {
+    font-size: .75rem;
+    position: absolute;
+    background-color: rgba(255, 255, 255, .75);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.food-variety .food-title {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.food-variety:first-child{
+    grid-area: a;
+}
+.food-variety:first-child .food-content{
+    background-color: rgba(52, 38, 121, .85);
+    color: white;
+    font-size: 1rem;
+    padding: 1.5rem 2.5rem;
+}
+.food-variety:first-child .food-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+.food-variety:first-child a {
+    border: 1px solid white;
+    padding: .25rem .75rem;
+    color: white!important;
+    border-radius: .5rem;
+}
+.food-variety:hover .food-content{
+    background-color: rgba(26, 30, 33, .75);
+    color: white;
+}
+.food-variety:hover a {
+    border: 1px solid white;
+    padding: .25rem .75rem;
+    color: white!important;
+    border-radius: .5rem;
+}
+
+.global-cuisines > *{
+    max-width: 25rem;
+}
+
+.cuisine-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.featured-chefs {
+    position: absolute;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 4rem;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+}
+.chef-card {
+    max-width: 15rem;
+    color: white;
+}
+
+.chef-card .chef-name{
+    font-size: 1rem;
+    font-weight: 700;
+}
+.chef-card img{
+    max-width: 5rem;
+    border-radius: 50%;
+    margin: .5rem auto;
+}
+
+.chef-center {
+    background-color: white;
+    padding: 1rem 2rem;
+    color: black;
+    border-radius: .75rem;
+    max-width: 20rem;
+
+}
+
+.last-section img{
+    width: 100%;
+}
+
+.misc-facts {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.misc-facts img {
+    max-width: 5rem;
+} 
+
+.misc-facts > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.misc-facts > *:nth-child(odd){
+    padding-right: 15rem;
+}
+
+.misc-facts > *:nth-child(even){
+    padding-left: 15rem;
+}
+
+.misc-facts > * > div {
+    max-width: 15rem;
+}
+.misc-facts .fact-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 1.5em auto .75rem auto;
+}
