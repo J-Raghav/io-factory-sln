@@ -1,32 +1,14 @@
 import React, { useState } from "react";
+import { useRef } from "react";
 import { useMemo } from "react";
-
-const profitPerTurn = {
-  P: 1000,
-  T: 1500,
-  C: 3000,
-};
-const timeToBuild = {
-  P: 4,
-  T: 5,
-  C: 10,
-};
-
-function CalculateMaximumProfit(input) {
-  if (!input) {
-    return [];
-  }
-
-  let allPossiblities = FindAllPossibleBuildOrders(input).map((i) =>
-    FindProfit(i)
-  );
-  return [...allPossiblities.sort((a, b) => b.profit - a.profit)];
-}
+import { CalculateMaximumProfit } from "./utils";
 
 export default function MaximumProfitProblem() {
   const [input, setInput] = useState(0);
+  const memo = useRef({});
+  const [maxTableRows, setMaxTableRows] = useState(100);
   const allPossiblitiesSorted = useMemo(
-    () => CalculateMaximumProfit(input),
+    () => CalculateMaximumProfit(input, memo.current),
     [input]
   );
   const maxProfit = allPossiblitiesSorted[0];
@@ -55,9 +37,28 @@ export default function MaximumProfitProblem() {
       </div>
       {allPossiblitiesSorted.length ? (
         <div className="">
-          <small className="">
-            Showing {allPossiblitiesSorted.length} possible build sequence.
-          </small>
+          <div className="d-flex justify-content-between align-items-center">
+            <small className="">
+              {`Showing ${Math.min(
+                allPossiblitiesSorted.length,
+                maxTableRows
+              )} of ${allPossiblitiesSorted.length} possible build sequence.`}
+            </small>
+            <div className="my-3 w-25">
+              <input
+                type="number"
+                className="form-control w-100"
+                value={maxTableRows}
+                min={10}
+                max={10000}
+                placeholder="Maximum table rows."
+                title="Maximum table rows."
+                onChange={(e) =>
+                  setMaxTableRows(Math.max(10, Number(e.target.value)))
+                }
+              />
+            </div>
+          </div>
           <table className="table bg-light shadow-lg">
             <thead>
               <tr>
@@ -69,100 +70,26 @@ export default function MaximumProfitProblem() {
               </tr>
             </thead>
             <tbody>
-              {allPossiblitiesSorted.map((possibleAnswer, ix) => (
-                <tr
-                  className={`${
-                    possibleAnswer.profit === maxProfit.profit
-                      ? "table-active"
-                      : ""
-                  }`}
-                  key={ix}
-                >
-                  {columnOrder.map((cn, ix) => (
-                    <td key={ix}>{possibleAnswer[cn]}</td>
-                  ))}
-                </tr>
-              ))}
+              {allPossiblitiesSorted
+                .slice(0, maxTableRows)
+                .map((possibleAnswer, ix) => (
+                  <tr
+                    className={`${
+                      possibleAnswer.profit === maxProfit.profit
+                        ? "table-active"
+                        : ""
+                    }`}
+                    key={ix}
+                  >
+                    {columnOrder.map((cn, ix) => (
+                      <td key={ix}>{possibleAnswer[cn]}</td>
+                    ))}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
       ) : null}
     </div>
   );
-}
-
-function FindProfit({ order, remainder }) {
-  let profit = 0;
-  let profitIncPerTurn = 0;
-
-  for (let i = 0; i < order.length; i++) {
-    let ch = order[i];
-    profit += profitIncPerTurn * timeToBuild[ch];
-    profitIncPerTurn += profitPerTurn[ch];
-  }
-
-  profit += profitIncPerTurn * remainder;
-  let grouped = order.split("").reduce(
-    (pre, cur) => {
-      pre[cur] = (pre[cur] || 0) + 1;
-      return pre;
-    },
-    { P: 0, T: 0, C: 0 }
-  );
-  return {
-    order,
-    remainder,
-    profit,
-    answer: FormatAnswer(grouped),
-    ...grouped,
-  };
-}
-
-function FindAllPossibleBuildOrders(t, props) {
-  let tout = [];
-  props = props || {
-    order: "",
-    remainder: 0,
-  };
-
-  if (t > timeToBuild.P) {
-    let nextProps = { ...props, order: props.order + "P" };
-    tout = [
-      ...tout,
-      ...FindAllPossibleBuildOrders(t - timeToBuild.P, nextProps),
-    ];
-  }
-
-  if (t > timeToBuild.T) {
-    let nextProps = { ...props, order: props.order + "T" };
-    tout = [
-      ...tout,
-      ...FindAllPossibleBuildOrders(t - timeToBuild.T, nextProps),
-    ];
-  }
-
-  if (t > timeToBuild.C) {
-    let nextProps = { ...props, order: props.order + "C" };
-    tout = [
-      ...tout,
-      ...FindAllPossibleBuildOrders(t - timeToBuild.C, nextProps),
-    ];
-  }
-
-  if (!tout.length) {
-    let lastProps = {
-      ...props,
-      remainder: t,
-    };
-    return [lastProps];
-  }
-
-  return tout;
-}
-
-function FormatAnswer(grouped) {
-  return Object.entries(grouped)
-    .filter(([k, v]) => k !== "profit")
-    .reduce((pre, cur) => `${pre} ${cur[0]}:${cur[1]}`, "")
-    .trimStart();
 }
