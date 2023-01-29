@@ -22,9 +22,9 @@ export function ShowCaseFood({ variety, className }) {
           <p className="my-3">{variety.description}</p>
           <hr />
           <div className="d-flex">
-            <button className="link-dark">
+            <a href="#culinary-kitchen"className="link-dark">
               {"Explore >"}
-            </button>
+            </a>
             <span className="ms-auto">Rate</span>
           </div>
         </div>
@@ -43,7 +43,7 @@ export function ChefCard({ name, desc, image, center }) {
 }
 export default function CulinaryKitchen() {
   return (
-    <div className="culinary-kitchen">
+    <div id="culinary-kitchen">
             <div className="m-3 bg-light text-black text-center">
       <div className="title-container">
         <span>Culinary Kitchen</span>

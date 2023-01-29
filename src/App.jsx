@@ -52,15 +52,20 @@ function App() {
           Change Theme
         </button>
       </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/water-tank-sln"
-          element={<WaterTankProblem colorPallet={{ main, cover }} />}
-        />
-        <Route path="/maximum-profit-sln" element={<MaximumProfitProblem />} />
-        <Route path="/culinary-kitchen" element={<CulinaryKitchen />} />
-      </Routes>
+      <div style={{ overflowX: "auto" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/water-tank-sln"
+            element={<WaterTankProblem colorPallet={{ main, cover }} />}
+          />
+          <Route
+            path="/maximum-profit-sln"
+            element={<MaximumProfitProblem theme={{ main, cover }} />}
+          />
+          <Route path="/culinary-kitchen" element={<CulinaryKitchen />} />
+        </Routes>
+      </div>
     </div>
   );
 }

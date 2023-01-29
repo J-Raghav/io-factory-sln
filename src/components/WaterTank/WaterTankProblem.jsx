@@ -6,7 +6,7 @@ import {
   getRandomBlockHeights,
   getWater,
 } from "./utils";
-import './WaterTankProblem.css'
+import "./WaterTankProblem.css";
 
 export default function WaterTankProblem({ colorPallet }) {
   const { main, cover } = colorPallet;
@@ -24,7 +24,7 @@ export default function WaterTankProblem({ colorPallet }) {
   const containerStyles = {
     maxHeight: containerHeightRem + "rem",
     width: containerWidthRem + "rem",
-    height: containerHeightRem + "rem"
+    height: containerHeightRem + "rem",
   };
 
   const pourWater = () => {
@@ -50,12 +50,12 @@ export default function WaterTankProblem({ colorPallet }) {
 
   return (
     <div
-      className="h-100 v-100 d-flex align-items-center">
+      className="h-100 v-100 d-flex align-items-center py-5"
+      style={{ minWidth: "800px" }}
+    >
       <div className="mx-auto" style={{ width: containerWidthRem + "rem" }}>
         <div className="w-100" style={{ height: "5rem" }}>
-          <h2 className="h2">
-            Water Tank Problem
-          </h2>
+          <h2 className="h2">Water Tank Problem</h2>
           {animations.length !== 0 ? (
             <div className="ms-auto strong">
               <span style={{ color: main }}>Ans. {waterVolume} Units</span>
