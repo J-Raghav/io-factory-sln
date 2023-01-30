@@ -1,7 +1,7 @@
 export const profitPerTurn = {
   P: 1000,
   T: 1500,
-  C: 3000,
+  C: 6000,
 };
 export const timeToBuild = {
   P: 4,

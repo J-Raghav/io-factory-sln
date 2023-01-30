@@ -5,7 +5,6 @@ export const scaleY = 2;
 export const containerWidthRem = containerWidth * scaleX;
 export const containerHeightRem = containerHeight * scaleY;
 
-
 export const colorPallets = [
   { main: "#5F4B8B", cover: "#E69A8D" },
   { main: "#F95700", cover: "#00A4CC" },
@@ -76,7 +75,7 @@ export function getBlocks(blockHeights, { main, cover }) {
 }
 
 // Used for setting up water blocks and animation.
-export function getWater(blockHeights, { cover, main }) {
+export function getWater(blockHeights, { cover, main }, walls) {
   const overflowHeights = getOverflowHeights(blockHeights);
 
   return blockHeights.map((blockHeight, ix) => {
@@ -87,7 +86,9 @@ export function getWater(blockHeights, { cover, main }) {
       left: ix * scaleX + "rem",
       color: "#fff",
     };
-    const overflowHeight = overflowHeights[ix];
+    const overflowHeight = walls
+      ? containerHeight * scaleY
+      : overflowHeights[ix];
 
     const keyFrames = [
       { height: `0rem` },

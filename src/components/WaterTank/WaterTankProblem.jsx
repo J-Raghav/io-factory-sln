@@ -1,21 +1,26 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  containerHeight,
   containerHeightRem,
   containerWidthRem,
   getBlocks,
   getRandomBlockHeights,
   getWater,
+  scaleX,
+  scaleY,
 } from "./utils";
 import "./WaterTankProblem.css";
 
 export default function WaterTankProblem({ colorPallet }) {
   const { main, cover } = colorPallet;
   const [blockHeights, setBlockHeights] = useState(getRandomBlockHeights());
+  const [walls, setWalls] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [animations, setAnimations] = useState([]);
   const [hideLabel, setHideLabel] = useState(false);
   const waterBlocks = useMemo(
-    () => getWater(blockHeights, colorPallet),
-    [blockHeights, colorPallet]
+    () => getWater(blockHeights, colorPallet, walls),
+    [blockHeights, colorPallet, walls]
   );
   const waterVolume = useMemo(
     () => waterBlocks.map((w) => w.overflow).reduce((pre, h) => pre + h, 0),
@@ -36,9 +41,9 @@ export default function WaterTankProblem({ colorPallet }) {
       })
     );
   };
-  const reloadBlocks = () => {
+  const reloadBlocks = (heights) => {
     animations.forEach((a) => a.cancel());
-    setBlockHeights(getRandomBlockHeights());
+    setBlockHeights(heights ?? getRandomBlockHeights());
     setAnimations([]);
   };
 
@@ -47,6 +52,12 @@ export default function WaterTankProblem({ colorPallet }) {
       ele.style.display = hideLabel ? "none" : "inline";
     });
   }, [hideLabel]);
+
+  useEffect(() => {
+    if (animations.length) {
+      pourWater();
+    }
+  }, [walls]);
 
   return (
     <div
@@ -64,7 +75,10 @@ export default function WaterTankProblem({ colorPallet }) {
         </div>
         <div
           className={`water-tank d-flex align-items-end justify-content-center flex-wrap mx-auto`}
-          style={containerStyles}
+          style={{
+            ...containerStyles,
+            outline: walls ? `${main} solid 1px` : "",
+          }}
         >
           {waterBlocks.map((w) => w.element)}
           {getBlocks(blockHeights, { main, cover })}
@@ -76,6 +90,7 @@ export default function WaterTankProblem({ colorPallet }) {
           <button
             className="btn btn-primary btn-sm rounded-0"
             onClick={() => pourWater()}
+            disabled={showEdit}
           >
             Pour Water
           </button>
@@ -87,11 +102,44 @@ export default function WaterTankProblem({ colorPallet }) {
           </button>
           <button
             className="btn btn-secondary ms-auto btn-sm rounded-0"
+            onClick={() => setShowEdit(!showEdit)}
+            disabled={animations.length}
+          >
+            {showEdit ? "Save" : "Edit"}
+          </button>
+          <button
+            className="btn btn-secondary btn-sm rounded-0"
             onClick={() => setHideLabel(!hideLabel)}
           >
             {hideLabel ? "Show" : "Hide"} label
           </button>
+          <button
+            className="btn btn-secondary btn-sm rounded-0"
+            onClick={() => setWalls(!walls)}
+          >
+            {walls ? "Closed" : "Open"} Container
+          </button>
         </div>
+        {showEdit ? (
+          <div className="d-flex">
+            {blockHeights.map((i, ix) => (
+              <input
+                type="number"
+                key={ix}
+                style={{ width: scaleX + "rem" }}
+                value={i / scaleY || 0}
+                onChange={(e) => {
+                  let h = Number(e.target.value) * scaleY;
+                  if (h >= 0 && h <= containerHeightRem) {
+                    let newHeights = [...blockHeights];
+                    newHeights[ix] = h;
+                    reloadBlocks(newHeights);
+                  }
+                }}
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );
